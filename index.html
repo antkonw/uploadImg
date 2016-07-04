@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>upload</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link href="" rel="stylesheet">
+	<meta name="viewport" content="width=device-width,height=device-height, user-scalable=no,initial-scale=1, minimum-scale=1, maximum-scale=1">
+  	
+	<style>
+		.container{
+			max-width:640px;
+			height:640px;
+			margin:30px auto;
+			border:1px solid #cecece;
+		}
+
+		#uploadPreview {                      
+		    background-position: center center;
+		    /*background-size: cover;*/
+		    background-size:100% 100%;
+		    border: 4px solid #fff;
+		    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+		}
+
+		img{
+			max-width:188px;
+			height:188px;
+			border:1px solid #cecece;
+			box-shadow: 0 0 3px #cecece;
+			margin:10px;
+		}
+
+		.btn{
+		    cursor: pointer;
+		    font-weight: 400;
+		    margin-bottom: 0;
+		    text-align: center;
+		    vertical-align: middle;
+		    white-space: nowrap;
+			background-color: #d9534f;
+			border:none;
+		    color: #fff;
+   			border-radius: 3px;
+		    font-size: 12px;
+		    line-height: 1.5;
+		    padding: 3px;
+		}
+
+		.btn:hover{
+			background-color:#ac2925;
+		}
+
+		@media only screen and (max-width:468px){
+			img{
+				width:150px;
+				height:150px;
+				border:1px solid #cecece;
+				box-shadow: 0 0 3px #cecece;
+				margin:5px;
+			}
+		}
+	</style>
+</head>
+	<body>
+	<div class="container">
+		<input id="uploadImage" type="file" name="photoimage" class="fimg1" />
+		<button class="btn">清空图片</button> 
+		<hr>
+		<div id="uploadPreview"></div>
+	</div>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+    	"use strict";
+    	$(function(){
+    		$("#uploadImage").on("change", function(){
+			    
+			    var files = !!this.files ? this.files : [];
+			 
+			    // 判断是否选择到文件
+			    if (!files.length || !window.FileReader) return;
+			 
+			    // 判断选择的文件的格式是图片
+			    if (/^image/.test(files[0].type)){
+			 
+			        // 创建一个新的FileReader的实例
+			        var reader = new FileReader();
+			 
+			        // 作为一个DataURL读取本地文件
+			        reader.readAsDataURL(files[0]);
+			 
+			        // 当加载时,往DIV里面追求图片
+			        reader.onloadend = function(){
+			         	 $("#uploadPreview").append($("<img>").attr("src",this.result));
+			      		 // $("#uploadPreview").css("background-image", "url("+ this.result +")");
+			        }
+			    }
+			});
+
+			$(".btn").on("click",function(){
+				if(confirm("确定要清空所有照片吗")){
+						$("#uploadPreview").empty();
+				}
+			});
+    	});
+    </script>
+	</body>
+</html>
